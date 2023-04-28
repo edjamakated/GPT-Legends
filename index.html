@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Text Legends">
+    <meta property="og:description" content="AI Simulated Conversations">
+    <meta property="og:image" content="preview.png">
+    <meta property="og:url" content="https://www.textlegends.com">
+    <title>Text Legends - Legends Converse using AI (GPT)</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="textlegends.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#settingsModal').modal('show');
+        });
+    </script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <img src="logo.png" alt="Text Legends logo" />
+        </div>
+    </header>
+    <div class="content">
+        <div class="container mt-5">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                Open Settings
+            </button>
+            <button id="toggle-debug" class="btn btn-secondary" onclick="toggleDebug()">Show Debug</button>
+            <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="legend-form" class="card p-4 mb-4"
+                                onsubmit="event.preventDefault(); toggleConversation();">
+                                <datalist id="legendOptions">
+                                    <option value="Albert Einstein">
+                                    <option value="Nelson Mandela">
+                                    <option value="William Shakespeare">
+                                    <option value="Leonardo da Vinci">
+                                    <option value="Marie Curie">
+                                    <option value="Mahatma Gandhi">
+                                    <option value="Isaac Newton">
+                                    <option value="Mother Teresa">
+                                    <option value="Martin Luther King Jr.">
+                                    <option value="Winston Churchill">
+                                    <option value="Galileo Galilei">
+                                    <option value="Charles Darwin">
+                                    <option value="Sigmund Freud">
+                                    <option value="Rosa Parks">
+                                    <option value="Amelia Earhart">
+                                    <option value="Confucius">
+                                    <option value="Cleopatra">
+                                    <option value="Frida Kahlo">
+                                    <option value="Abraham Lincoln">
+                                    <option value="Ada Lovelace">
+                                </datalist>
+                                <datalist id="discussion-topics">
+                                    <option value="The nature of creativity and innovation">
+                                    <option value="The power of words">
+                                    <option value="The role of science in society">
+                                    <option value="The pursuit of justice">
+                                    <option value="The challenges of leadership">
+                                    <option value="The nature of the universe">
+                                    <option value="The power of faith">
+                                    <option value="The value of self-reflection">
+                                    <option value="The importance of perseverance">
+                                    <option value="The legacy of history">
+                                </datalist>
+                                <div class="mb-3">
+                                    <label for="legend1" class="form-label" list="legendOptions">Legend 1:</label>
+                                    <input type="text" class="form-control" autocomplete="off" list="legendOptions"
+                                        id="legend1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="legend2" class="form-label" list="legendOptions">Legend 2:</label>
+                                    <input type="text" class="form-control" autocomplete="off" list="legendOptions"
+                                        id="legend2" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="topic" class="form-label">Topic:</label>
+                                    <input type="text" class="form-control" autocomplete="off" list="discussion-topics"
+                                        id="topic" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="api-key" class="form-label">API Key: (Optional)</label>
+                                    <input type="text" class="form-control" id="api-key" default="null">
+                                </div>
+                                <button id="start-stop-button" type="submit" class="btn btn-primary"
+                                    data-bs-dismiss="modal">Start Conversation</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary" onclick="saveSettings()">Save changes</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="debug-container" class="card p-4" style="height: 150px; overflow-y: auto;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="chat-container" class="card p-4 mb-4" style="height: 400px; overflow-y: auto;"></div>
+                </div>
+            </div>
+            <footer class="footer">
+                Ryan Decker &copy; 2023
+            </footer>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+            <script src="textlegends.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                crossorigin="anonymous"></script>
+</body>
+
+</html>
