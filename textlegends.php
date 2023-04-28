@@ -2,7 +2,7 @@
 function getGPT4Response($legend, $message1, $message2, $api_key = null)
 {
     if ($api_key === null) {
-        $api_key = "key123";
+        $api_key = "sk-placeyourkeyhere";
     }
     $api_url = 'https://api.openai.com/v1/chat/completions';
 
@@ -12,13 +12,13 @@ function getGPT4Response($legend, $message1, $message2, $api_key = null)
     ];
 
     $data = [
-        'model' => 'gpt-3.5-turbo',
+        'model' => 'gpt-4',
         'messages' => [
             ['role' => 'system', 'content' => "You are a conversational chat bot that acts like the famous person $legend. Use a lot of their common expressions, phrases, lyrics, and style. Keep it succinct, preferably no more than 3 sentences."],
             ['role' => 'assistant', 'content' => $message1],
             ['role' => 'user', 'content' => $message2],
         ],
-        'temperature' => 0.3,
+        'temperature' => 0.5,
         'max_tokens' => 1550,
         'top_p' => 1,
         'frequency_penalty' => 0,
