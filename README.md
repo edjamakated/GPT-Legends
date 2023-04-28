@@ -4,6 +4,8 @@ Text Legends is a web application that allows you to simulate a conversation bet
 
 Use GPT api to conduct conversations with legendary figures on a specific topic using their style.
 
+## Live Demo available at www.textlegends.com
+
 ![Text Legends Preview](preview.png)
 
 ## Features
