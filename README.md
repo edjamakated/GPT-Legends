@@ -1,9 +1,8 @@
-# GPT-Legends
-Use GPT api to conduct conversations with legendary figures on a specific topic using their style.
-
-# Text Legends
+# Text Legends (aka GPT-Legends)
 
 Text Legends is a web application that allows you to simulate a conversation between two legendary figures or about a topic using a GPT-based AI chat model.
+
+Use GPT api to conduct conversations with legendary figures on a specific topic using their style.
 
 ![Text Legends Preview](preview.png)
 
