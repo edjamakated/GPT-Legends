@@ -9,9 +9,9 @@ $(document).ready(() => {
 
     displayMessage('assistant', 'TextLegends Creator', `Welcome to TextLegends, please pick two legends and a topic in settings and start the conversation. This should be interesting... Let me know if you have any feedback. Thanks!`);
 
-    setTimeout(function() {
+    setTimeout(function () {
         $('#settingsModal').modal('show');
-      }, 5000);
+    }, 5000);
 
     openSettingsButton.on("click", () => {
         if (!settingsModal.is(":visible")) {
@@ -63,9 +63,7 @@ $(document).ready(() => {
         async function getResponse(legend, message1, message2) {
             return sendApiRequest(legend, message1, message2);
         }
-        async function getSummary(chatHistoryLog) {
-            return sendApiSummary(chatHistoryLog);
-        }
+
 
         try {
             await delay(4500);
@@ -95,12 +93,12 @@ $(document).ready(() => {
                 counter++;
 
                 if (counter > 5) {
-
                     const chatHistory = $('#chat-container').text();
-                    var thisSummary = getSummary(chatHistory);
+                    const thisSummary = await getSummary(chatHistory);
                     displayMessage('assistant', 'TextLegends', `Ended the Conversation between "${legend1}" and "${legend2}" discussing the topic "${topic}. Here is a summary: ${thisSummary} "`);
                     console.log("The 10 iterations have completed");
                     clearInterval(conversationInterval);
+                    exit;
                 }
             }, 12250);
         } catch (error) {
@@ -131,6 +129,7 @@ $(document).ready(() => {
             console.error('Error fetching chatbot response:', error);
         }
     }
+
     async function sendApiSummary(chatLog) {
         try {
             const response = await axios.get('summarize.php', {
@@ -144,25 +143,30 @@ $(document).ready(() => {
             console.error('Error fetching summary response:', error);
         }
     }
-    $("#toggle-debug").click(function() {
-        toggleDebug();
-      });
-    
-      $("#copy-button").click(function() {
-        copyChat();
-      });
 
-      async function copyChat() {
+    async function getSummary(chatHistoryLog) {
+        return sendApiSummary(chatHistoryLog);
+    }
+
+    $("#toggle-debug").click(function () {
+        toggleDebug();
+    });
+
+    $("#copy-button").click(function () {
+        copyChat();
+    });
+
+    async function copyChat() {
         const chatText = $('#chat-container').text();
-      
+
         try {
-          await navigator.clipboard.writeText(chatText);
-          alert('Chat text copied to clipboard!');
+            await navigator.clipboard.writeText(chatText);
+            alert('Chat text copied to clipboard!');
         } catch (err) {
-          console.error('Failed to copy text: ', err);
+            console.error('Failed to copy text: ', err);
         }
-      }
-      
+    }
+
 
     function displayMessage(role, name, message) {
         displayDebugInfo(name, name, message);
@@ -170,11 +174,11 @@ $(document).ready(() => {
         const messageLine = $('<div>').addClass('message-line');
         const nameElement = $('<div>').addClass('name').text(name + ':');
         messageLine.append(nameElement);
-        const messageElement = $('<div>').addClass('message').addClass(role).text(message);
+        const messageElement = $('<div>').addClass('message').addClass(role).addClass('animate__animated').addClass('animate__fadeIn').text(message);
         messageLine.append(messageElement);
         chatContainer.append(messageLine);
         chatContainer.scrollTop(chatContainer[0].scrollHeight);
-    }
+    }    
 
     function displayDebugInfo(legend, message, response) {
         const debugContainer = $('#debug-container');
