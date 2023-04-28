@@ -2,7 +2,7 @@
 function getGPT4Response($legend, $message1, $message2, $api_key = null)
 {
     if ($api_key === null) {
-        $api_key = "sk-placeyourkeyhere";
+        $api_key = "sk-putYourKeyHere";
     }
     $api_url = 'https://api.openai.com/v1/chat/completions';
 
